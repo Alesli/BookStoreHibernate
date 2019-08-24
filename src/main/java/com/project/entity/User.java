@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "user",schema ="public")
+@Table(name = "user", schema = "public")
 public class User implements Serializable {
 
     @Id
@@ -38,13 +38,4 @@ public class User implements Serializable {
             foreignKey = @ForeignKey(name = "fk_user_to_book"))
     private List<Book> books;
 
-    public User(String name, String pass, Double cash, List<Book> books) {
-        this.name = name;
-        this.pass = pass;
-        this.cash = cash;
-        this.books = books;
-    }
-
-    public User() {
-    }
 }

@@ -13,7 +13,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findOneById(Long id) {
-
         Book book = entityManager.find(Book.class, id);
         entityManager.detach(book);
         return book;
@@ -21,7 +20,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-
         List<Book> books = entityManager.createQuery("SELECT b FROM Book b").getResultList();
         entityManager.detach(books);
         return books;

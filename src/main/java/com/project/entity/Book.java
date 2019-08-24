@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "book",schema ="public")
+@Table(name = "book", schema = "public")
 public class Book implements Serializable {
 
     @Id
@@ -58,16 +58,4 @@ public class Book implements Serializable {
             foreignKey = @ForeignKey(name = "fk_book_to_user"))
     private List<User> users;
 
-    public Book(String name, String author, String description, Double cost, Integer count, List<Shop> shops, List<User> users) {
-        this.name = name;
-        this.author = author;
-        this.description = description;
-        this.cost = cost;
-        this.count = count;
-        this.shops = shops;
-        this.users = users;
-    }
-
-    public Book() {
-    }
 }

@@ -70,7 +70,6 @@ public class App {
             } else {
                 setShop(shopList.get(0));
             }
-            // todo: попробовать обернуть в цикл, чтобы юзер мог постоянно книги покупать
 
             while (true) {
                 int menuItem = mainMenu.getMenuItems();

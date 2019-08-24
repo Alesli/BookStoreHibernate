@@ -7,33 +7,31 @@ import com.project.service.ShopService;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
-@Transactional
+
 public class ShopServiceImpl implements ShopService {
 
     private EntityManager entityManager = JpaUtil.getEntityManager();
 
     @Override
     public Shop findOneById(Long id) {
-
-        Shop shop = entityManager.find(Shop.class, id);
-//        entityManager.detach(shop);
-        return shop;
+        return entityManager.find(Shop.class, id);
     }
 
     @Override
     public List<Shop> findAll() {
         List<Shop> shops = entityManager.createQuery("SELECT s FROM Shop s").getResultList();
+
         return shops;
     }
 
     @Override
     public Shop updateCash(Long id, Double cash) {
         Shop shop = findOneById(id);
-//        entityManager.detach(shop);
+        entityManager.detach(shop);
         shop.setCash(shop.getCash() + cash);
-//        entityManager.getTransaction().begin();
-//        entityManager.merge(shop);
-//        entityManager.getTransaction().commit();
+        entityManager.getTransaction().begin();
+        entityManager.merge(shop);
+        entityManager.getTransaction().commit();
 
         return save(shop);
     }
@@ -46,11 +44,8 @@ public class ShopServiceImpl implements ShopService {
             entityManager.getTransaction().commit();
         } else {
             entityManager.merge(shop);
-//            entityManager.flush();
             entityManager.getTransaction().commit();
         }
-
-//        entityManager.merge(shop);
 
         return shop;
     }

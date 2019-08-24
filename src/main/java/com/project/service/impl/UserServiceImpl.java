@@ -12,7 +12,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOneById(Long id) {
-
         User user = entityManager.find(User.class, id);
         entityManager.detach(user);
         return user;
