@@ -2,6 +2,7 @@ package com.project.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -39,10 +40,8 @@ public class Book implements Serializable {
     @Column(name = "count")
     private Integer count;
 
-    @ManyToMany(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH},
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @ManyToMany(
             fetch = FetchType.LAZY)
     @JoinTable(name = "shop_book",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -50,10 +49,8 @@ public class Book implements Serializable {
             foreignKey = @ForeignKey(name = "fk_book_to_shop"))
     private List<Shop> shops;
 
-    @ManyToMany(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH},
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @ManyToMany(
             fetch = FetchType.LAZY)
     @JoinTable(name = "user_book",
             joinColumns = @JoinColumn(name = "book_id"),

@@ -18,6 +18,7 @@
             <!--<property name="javax.persistence.schema-generation.scripts.create-target" value="shopbook2408.sql"/>-->
             <!--<property name="hibernate.show_sql" value="true" />-->
             <!--<property name="hibernate.format_sql" value="true" />-->
+            <property name="hibernate.event.merge.entity_copy_observer" value="allow"/>
         </properties>
     </persistence-unit>
 

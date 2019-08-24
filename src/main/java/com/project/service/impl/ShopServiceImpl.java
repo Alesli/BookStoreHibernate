@@ -5,8 +5,9 @@ import com.project.jpa.JpaUtil;
 import com.project.service.ShopService;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Transactional
 public class ShopServiceImpl implements ShopService {
 
     private EntityManager entityManager = JpaUtil.getEntityManager();
@@ -15,7 +16,7 @@ public class ShopServiceImpl implements ShopService {
     public Shop findOneById(Long id) {
 
         Shop shop = entityManager.find(Shop.class, id);
-        entityManager.detach(shop);
+//        entityManager.detach(shop);
         return shop;
     }
 
@@ -28,24 +29,25 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop updateCash(Long id, Double cash) {
         Shop shop = findOneById(id);
-        entityManager.detach(shop);
+//        entityManager.detach(shop);
         shop.setCash(shop.getCash() + cash);
-        entityManager.getTransaction().begin();
-        entityManager.merge(shop);
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().begin();
+//        entityManager.merge(shop);
+//        entityManager.getTransaction().commit();
 
         return save(shop);
     }
 
     @Override
     public Shop save(Shop shop) {
-//        entityManager.getTransaction().begin();
+        entityManager.getTransaction().begin();
         if (shop.getId() == null) {
             entityManager.persist(shop);
             entityManager.getTransaction().commit();
         } else {
             entityManager.merge(shop);
-//            entityManager.getTransaction().commit();
+//            entityManager.flush();
+            entityManager.getTransaction().commit();
         }
 
 //        entityManager.merge(shop);
