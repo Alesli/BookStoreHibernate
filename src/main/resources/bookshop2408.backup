@@ -1,0 +1,267 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.5
+-- Dumped by pg_dump version 11.3
+
+-- Started on 2019-08-24 14:32:57
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 196 (class 1259 OID 16534)
+-- Name: book; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.book (
+    id bigint NOT NULL,
+    name character varying(50) NOT NULL,
+    author character varying(50) NOT NULL,
+    description character varying(250),
+    cost numeric(10,2) NOT NULL,
+    count integer NOT NULL
+);
+
+
+ALTER TABLE public.book OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 16539)
+-- Name: shop; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.shop (
+    id bigint NOT NULL,
+    name character varying(50) NOT NULL,
+    cash numeric(10,2) NOT NULL
+);
+
+
+ALTER TABLE public.shop OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 16554)
+-- Name: shop_book; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.shop_book (
+    shop_id bigint NOT NULL,
+    book_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.shop_book OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 16544)
+-- Name: user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."user" (
+    id bigint NOT NULL,
+    pass character varying(50) NOT NULL,
+    name character varying(50) NOT NULL,
+    cash numeric(10,2) NOT NULL
+);
+
+
+ALTER TABLE public."user" OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 16549)
+-- Name: user_book; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_book (
+    user_id bigint NOT NULL,
+    book_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.user_book OWNER TO postgres;
+
+--
+-- TOC entry 2834 (class 0 OID 16534)
+-- Dependencies: 196
+-- Data for Name: book; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.book (id, name, author, description, cost, count) FROM stdin;
+2	The Dark Tower: The Gunslinger	Stephen King	The gunslinger comes across a hut in the desert owned by a farmer named Brown...	24.00	6
+3	Needful Things	Stephen King	A new shop named "Needful Things" opens in the town of Castle Rock, sparking the curiosity of its citizens...	11.00	7
+4	A Game of Thrones	George R. R. Martin	A Game of Thrones is the first novel in A Song of Ice and Fire...	46.00	9
+5	Hyperion	Dan Simmons	The first book of the tetralogy "Songs of Hyperion.	15.00	9
+1	Pet Sematary	Stephen King	Louis Creed, a doctor from Chicago, moves to a large house near the small town of Ludlow with his family...	12.00	12
+\.
+
+
+--
+-- TOC entry 2835 (class 0 OID 16539)
+-- Dependencies: 197
+-- Data for Name: shop; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.shop (id, name, cash) FROM stdin;
+2	Biblio	1020.00
+1	OZ	1572.00
+\.
+
+
+--
+-- TOC entry 2838 (class 0 OID 16554)
+-- Dependencies: 200
+-- Data for Name: shop_book; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.shop_book (shop_id, book_id) FROM stdin;
+2	2
+2	3
+2	5
+1	2
+1	3
+1	4
+1	5
+1	1
+\.
+
+
+--
+-- TOC entry 2836 (class 0 OID 16544)
+-- Dependencies: 198
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."user" (id, pass, name, cash) FROM stdin;
+2	pass456	Rita	54.00
+3	pass789	Alex	157.00
+4	pass098	Olga	158.00
+1	pass123	Ivan	463.00
+\.
+
+
+--
+-- TOC entry 2837 (class 0 OID 16549)
+-- Dependencies: 199
+-- Data for Name: user_book; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_book (user_id, book_id) FROM stdin;
+1	1
+\.
+
+
+--
+-- TOC entry 2700 (class 2606 OID 16538)
+-- Name: book book_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.book
+    ADD CONSTRAINT book_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2702 (class 2606 OID 16543)
+-- Name: shop shop_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shop
+    ADD CONSTRAINT shop_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2704 (class 2606 OID 16548)
+-- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2707 (class 1259 OID 16557)
+-- Name: fk_book_to_shop; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fk_book_to_shop ON public.shop_book USING btree (book_id NULLS FIRST) INCLUDE (book_id);
+
+
+--
+-- TOC entry 2705 (class 1259 OID 16553)
+-- Name: fk_book_to_user; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fk_book_to_user ON public.user_book USING btree (book_id NULLS FIRST) INCLUDE (book_id);
+
+
+--
+-- TOC entry 2708 (class 1259 OID 16558)
+-- Name: fk_shop_to_book; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fk_shop_to_book ON public.shop_book USING btree (shop_id NULLS FIRST) INCLUDE (shop_id);
+
+
+--
+-- TOC entry 2706 (class 1259 OID 16552)
+-- Name: fk_user_to_book; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fk_user_to_book ON public.user_book USING btree (user_id NULLS FIRST) INCLUDE (user_id);
+
+
+--
+-- TOC entry 2711 (class 2606 OID 16559)
+-- Name: shop_book fk_book_to_shop; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shop_book
+    ADD CONSTRAINT fk_book_to_shop FOREIGN KEY (book_id) REFERENCES public.book(id);
+
+
+--
+-- TOC entry 2709 (class 2606 OID 16569)
+-- Name: user_book fk_book_to_user; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_book
+    ADD CONSTRAINT fk_book_to_user FOREIGN KEY (book_id) REFERENCES public.book(id);
+
+
+--
+-- TOC entry 2712 (class 2606 OID 16564)
+-- Name: shop_book fk_shop_to_book; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.shop_book
+    ADD CONSTRAINT fk_shop_to_book FOREIGN KEY (shop_id) REFERENCES public.shop(id);
+
+
+--
+-- TOC entry 2710 (class 2606 OID 16574)
+-- Name: user_book fk_user_to_book; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_book
+    ADD CONSTRAINT fk_user_to_book FOREIGN KEY (user_id) REFERENCES public."user"(id);
+
+
+-- Completed on 2019-08-24 14:32:58
+
+--
+-- PostgreSQL database dump complete
+--
+
