@@ -39,13 +39,13 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public Shop save(Shop shop) {
-//        entityManager.getTransaction().begin();
-//        if (shop.getId() == null) {
-//            entityManager.persist(shop);
-//        } else {
-//            entityManager.merge(shop);
-//        }
-//        entityManager.getTransaction().commit();
+        entityManager.getTransaction().begin();
+        if (shop.getId() == null) {
+            entityManager.persist(shop);
+        } else {
+            entityManager.merge(shop);
+        }
+        entityManager.getTransaction().commit();
         entityManager.merge(shop);
 
         return shop;

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "shop",schema ="public")
@@ -38,9 +38,4 @@ public class Shop implements Serializable {
             foreignKey = @ForeignKey(name = "fk_shop_to_book"))
     private List<Book> books;
 
-    public Shop(String name, Double cash, List<Book> books) {
-        this.name = name;
-        this.cash = cash;
-        this.books = books;
-    }
 }
