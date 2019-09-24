@@ -22,8 +22,8 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
-DROP DATABASE IF EXISTS public.bookshop;
-CREATE DATABASE public.bookshop /*!40100 DEFAULT CHARACTER SET utf8 */;
+DROP DATABASE IF EXISTS public.bookstore;
+CREATE DATABASE public.bookstore /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 
 CREATE TABLE public.book (
