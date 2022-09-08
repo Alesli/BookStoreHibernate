@@ -17,7 +17,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <lombok-version>1.18.8</lombok-version>
-    <postgresql-version>42.2.25</postgresql-version>
+    <postgresql-version>42.4.1</postgresql-version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <hibernate-version>5.4.2.Final</hibernate-version>
